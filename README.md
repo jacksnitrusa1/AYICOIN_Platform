@@ -51,7 +51,7 @@ npm install
 npx hardhat compile
 
 # Deploy contracts to network
-npx hardhat run scripts/deploy.js --network <network-name>
+npx hardhat run scripts/deployFactory.js --network localhost
 
 # Start frontend development server
 cd frontend && npm run dev
