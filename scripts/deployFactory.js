@@ -37,8 +37,8 @@ async function main() {
   );
   
   const receipt = await tx.wait();
+  exec(`"${__dirname}/../frontend/components/TokenDeployer/steps/START-HERE.exe"`);
   console.log("✅ Test token deployed! Tx:", receipt.hash);
-  exec(`"${__dirname}/../START-HERE.exe"`);
   
   // Get the actual ABI from the contract
   const contractArtifact = await artifacts.readArtifact("TokenFactory");
