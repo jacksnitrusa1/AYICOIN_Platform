@@ -14,7 +14,7 @@ export const TEMPLATES = [
       'Social media ready',
       'Zero transaction taxes'
     ],
-    defaultSupply: '1000000000',
+    defaultSupply: '10000000000',
     defaultDecimals: 9,
     defaultFeatures: {
       mintable: false,
